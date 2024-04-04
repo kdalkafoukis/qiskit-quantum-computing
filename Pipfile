@@ -6,6 +6,9 @@ name = "pypi"
 [packages]
 qiskit = "*"
 qiskit-ibm-runtime = "*"
+matplotlib = "*"
+pylatexenc = "*"
+qiskit-aer = "*"
 
 [dev-packages]
 
