@@ -30,25 +30,21 @@ cr = ClassicalRegister(4)
 qr = QuantumRegister(4)
 qc = QuantumCircuit(qr, cr)
 
+U1_op = U1.to_instruction()
+U1_controlled = U1_op.control(1)
 
-qc.h(0)
+U2_op = U2.to_instruction()
+U2_controlled = U2_op.control(1, ctrl_state=0)
+
+steps = 3
 # qc.x(1)
 # qc.x(2)
 # qc.x(3)
 
-U1_op = U1.to_instruction()
-U1_controlled = U1_op.control(1)
-qc.append(U1_controlled, [0, 1, 2, 3])
-
-
-U2_op = U2.to_instruction()
-U2_controlled = U2_op.control(1, ctrl_state=0)
-qc.append(U2_controlled, [0, 1, 2, 3])
-
-
-qc.h(0)
-qc.append(U1_controlled, [0, 1, 2, 3])
-qc.append(U2_controlled, [0, 1, 2, 3])
+for step in range(steps):
+    qc.h(0)
+    qc.append(U1_controlled, [0, 1, 2, 3])
+    qc.append(U2_controlled, [0, 1, 2, 3])
 
 
 qc.measure([0, 1, 2, 3], [3, 0, 1, 2])
