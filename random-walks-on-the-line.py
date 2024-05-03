@@ -1,6 +1,6 @@
 from qiskit.providers.basic_provider import BasicSimulator
 from qiskit import transpile, QuantumRegister, ClassicalRegister, QuantumCircuit
-from qiskit.quantum_info.operators import Operator
+from qiskit.circuit.library import UnitaryGate
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -13,8 +13,6 @@ U1 = np.array([[0, 0, 0, 0, 0, 0, 0, 1],
                [0, 0, 0, 0, 0, 1, 0, 0],
                [0, 0, 0, 0, 0, 0, 1, 0]], dtype=int)
 
-U1 = Operator(U1)
-
 U2 = np.array([[0, 1, 0, 0, 0, 0, 0, 0],
                [0, 0, 1, 0, 0, 0, 0, 0],
                [0, 0, 0, 1, 0, 0, 0, 0],
@@ -24,16 +22,14 @@ U2 = np.array([[0, 1, 0, 0, 0, 0, 0, 0],
                [0, 0, 0, 0, 0, 0, 0, 1],
                [1, 0, 0, 0, 0, 0, 0, 0]], dtype=int)
 
-U2 = Operator(U2)
-
 cr = ClassicalRegister(4)
 qr = QuantumRegister(4)
 qc = QuantumCircuit(qr, cr)
 
-U1_op = U1.to_instruction()
+U1_op = UnitaryGate(U1)
 U1_controlled = U1_op.control(1)
 
-U2_op = U2.to_instruction()
+U2_op = UnitaryGate(U1)
 U2_controlled = U2_op.control(1, ctrl_state=0)
 
 steps = 3
