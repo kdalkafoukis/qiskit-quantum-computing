@@ -9,6 +9,9 @@ qiskit-ibm-runtime = "*"
 matplotlib = "*"
 pylatexenc = "*"
 qiskit-aer = "*"
+notebook = "*"
+pandas = "*"
+scikit-learn = "*"
 
 [dev-packages]
 
