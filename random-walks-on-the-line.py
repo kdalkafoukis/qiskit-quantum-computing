@@ -23,10 +23,10 @@ qc = QuantumCircuit(qr, cr)
 U1_op = UnitaryGate(U1)
 U1_controlled = U1_op.control(1)
 
-U2_op = UnitaryGate(U1)
+U2_op = UnitaryGate(U2)
 U2_controlled = U2_op.control(1, ctrl_state=0)
 
-steps = 3
+steps = 1
 # qc.x(1)
 # qc.x(2)
 # qc.x(3)
