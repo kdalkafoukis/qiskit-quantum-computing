@@ -4,23 +4,17 @@ from qiskit.circuit.library import UnitaryGate
 import matplotlib.pyplot as plt
 import numpy as np
 
-U1 = np.array([[0, 0, 0, 0, 0, 0, 0, 1],
-               [1, 0, 0, 0, 0, 0, 0, 0],
-               [0, 1, 0, 0, 0, 0, 0, 0],
-               [0, 0, 1, 0, 0, 0, 0, 0],
-               [0, 0, 0, 1, 0, 0, 0, 0],
-               [0, 0, 0, 0, 1, 0, 0, 0],
-               [0, 0, 0, 0, 0, 1, 0, 0],
-               [0, 0, 0, 0, 0, 0, 1, 0]], dtype=int)
+qubits = 3
+size = 2 ** qubits
 
-U2 = np.array([[0, 1, 0, 0, 0, 0, 0, 0],
-               [0, 0, 1, 0, 0, 0, 0, 0],
-               [0, 0, 0, 1, 0, 0, 0, 0],
-               [0, 0, 0, 0, 1, 0, 0, 0],
-               [0, 0, 0, 0, 0, 1, 0, 0],
-               [0, 0, 0, 0, 0, 0, 1, 0],
-               [0, 0, 0, 0, 0, 0, 0, 1],
-               [1, 0, 0, 0, 0, 0, 0, 0]], dtype=int)
+
+U1 = np.zeros((size, size), dtype=int)
+U1[0][size - 1] = 1
+U1[np.eye(size, k=-1, dtype='bool')] = 1
+
+U2 = np.zeros((size, size), dtype=int)
+U2[size - 1][0] = 1
+U2[np.eye(size, k=1, dtype='bool')] = 1
 
 cr = ClassicalRegister(4)
 qr = QuantumRegister(4)
