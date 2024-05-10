@@ -28,39 +28,43 @@ def transition_state(digits, ctrl_state=None):
     qc.to_gate()
     return qc
 
-num = "000"
 
-num_of_qubits = len(num) + 1
-qubits = list(range(num_of_qubits))
-cbit = list(range(num_of_qubits - 1))
-cbit.insert(0, num_of_qubits - 1)
+def random_walk_on_the_line(steps=1):
+    num = "000"
 
-cr = ClassicalRegister(num_of_qubits)
-qr = QuantumRegister(num_of_qubits)
-qc = QuantumCircuit(qr, cr)
+    num_of_qubits = len(num) + 1
+    qubits = list(range(num_of_qubits))
+    cbit = list(range(num_of_qubits - 1))
+    cbit.insert(0, num_of_qubits - 1)
 
-Uplus_op = transition_state(num)
-Uplus_controlled = Uplus_op.control(1)
+    cr = ClassicalRegister(num_of_qubits)
+    qr = QuantumRegister(num_of_qubits)
+    qc = QuantumCircuit(qr, cr)
 
-Uminus_op = transition_state(num, ctrl_state=0)
-Uminus_controlled = Uminus_op.control(1, ctrl_state=0)
+    Uplus_op = transition_state(num)
+    Uplus_controlled = Uplus_op.control(1)
 
-steps = 1
-initialize_state(qc, num)
+    Uminus_op = transition_state(num, ctrl_state=0)
+    Uminus_controlled = Uminus_op.control(1, ctrl_state=0)
 
-for step in range(steps):
-    qc.h(0)
-    qc.append(Uplus_controlled, qubits)
-    qc.append(Uminus_controlled, qubits)
+    steps = 1
+    initialize_state(qc, num)
 
-qc.decompose().draw('mpl')
+    for _ in range(steps):
+        qc.h(0)
+        qc.append(Uplus_controlled, qubits)
+        qc.append(Uminus_controlled, qubits)
 
+    qc.decompose().draw('mpl')
 
-qc.measure(qubits, cbit)
+    qc.measure(qubits, cbit)
 
-backend = BasicSimulator()
-tqc = transpile(qc, backend)
-counts = backend.run(tqc).result().get_counts()
-print(counts)
+    backend = BasicSimulator()
+    tqc = transpile(qc, backend)
+    counts = backend.run(tqc).result().get_counts()
+    return counts
+
+print(random_walk_on_the_line())
+
 
 plt.show()
